@@ -13,7 +13,7 @@ const httpOptions = {
 
 @Injectable()
 export class HeroService {
-  private heroesUrl = 'api/heroes';  // Web APIのURL
+  private heroesUrl = 'http://127.0.0.1:8080/heros';  // Web APIのURL
   constructor(
     private http: HttpClient,
     private messageService: MessageService) { }
@@ -89,7 +89,7 @@ export class HeroService {
       // 検索語がない場合、空のヒーロー配列を返す
       return of([]);
     }
-    return this.http.get<Hero[]>(`api/heroes/?name=${term}`).pipe(
+    return this.http.get<Hero[]>(`${this.heroesUrl}/?name=${term}`).pipe(
       tap(_ => this.log(`found heroes matching "${term}"`)),
       catchError(this.handleError<Hero[]>('searchHeroes', []))
     );
